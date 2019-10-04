@@ -17,3 +17,10 @@ def generate_hex_to_binary_mapping():
         'E': '1110',
         'F': '1111'
     }
+
+# def generate_binary_to_base64_mapping():
+#     import string
+
+#     base64_alphabet = string.ascii_uppercase + string.ascii_lowercase + string.digits + '+/'
+
+#     for counter,alphabet in enumerate(base64_alphabet):
