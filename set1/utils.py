@@ -1,8 +1,10 @@
 def hex_to_base64(hex_input):
-    from data_utils import generate_hex_to_binary_mapping
+    from data_utils import generate_hex_to_binary_mapping, generate_binary_to_base64_mapping
+
+    if len(hex_input) == 0:
+        return ''
+
     hex_to_bin = generate_hex_to_binary_mapping()
-    # import codecs
-    # return codecs.encode(codecs.decode(hex_input, "hex"), "base64").decode().strip('\n')
     hex_string_to_binary_string = ''
     binary_chunks_to_convert = []
 
@@ -15,11 +17,34 @@ def hex_to_base64(hex_input):
         else:
             binary_chunks_to_convert.append(hex_string_to_binary_string[chunk:])
 
-    # for chunk in binary_chunks_to_convert:
+    base64_final_string = ''
+    bin_to_base64 = generate_binary_to_base64_mapping()
 
-    # Useful stuff:
-    # import string
-    # alphabet = string.ascii_uppercase + string.ascii_lowercase + string.digits + '+/'
+    for chunk in binary_chunks_to_convert[:-1]:
+        base64_final_string+=bin_to_base64[chunk[:6]]
+        base64_final_string+=bin_to_base64[chunk[6:12]]
+        base64_final_string+=bin_to_base64[chunk[12:18]]
+        base64_final_string+=bin_to_base64[chunk[18:24]]
+    
+    final_chunk = binary_chunks_to_convert[-1]
+    last_chunk_len = len(final_chunk)
 
-    # "{0:b}".format(51)
-    # bin(int('110011', base=2))
+    if last_chunk_len == 8:
+        final_chunk+='0000'
+        base64_final_string+=bin_to_base64[final_chunk[:6]]
+        base64_final_string+=bin_to_base64[final_chunk[6:12]]
+        base64_final_string+='=='
+    elif last_chunk_len == 16:
+        final_chunk+='00'
+        base64_final_string+=bin_to_base64[final_chunk[:6]]
+        base64_final_string+=bin_to_base64[final_chunk[6:12]]
+        base64_final_string+=bin_to_base64[final_chunk[12:18]]
+        base64_final_string+='='
+    else:
+        base64_final_string+=bin_to_base64[final_chunk[:6]]
+        base64_final_string+=bin_to_base64[final_chunk[6:12]]
+        base64_final_string+=bin_to_base64[final_chunk[12:18]]
+        base64_final_string+=bin_to_base64[final_chunk[18:24]]
+    
+    return base64_final_string
+
