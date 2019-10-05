@@ -1,30 +1,21 @@
 def generate_hex_to_binary_mapping():
-    return {
-        '0': '0000',
-        '1': '0001',
-        '2': '0010',
-        '3': '0011',
-        '4': '0100',
-        '5': '0101',
-        '6': '0110',
-        '7': '0111',
-        '8': '1000',
-        '9': '1001',
-        'a': '1010',
-        'b': '1011',
-        'c': '1100',
-        'd': '1101',
-        'e': '1110',
-        'f': '1111'
-    }
+    import string
+
+    hex_alphabet = string.digits + 'abcdef'
+    return _create_mapping_from_alphabet(hex_alphabet,4,binary_to_alphabet=False)
 
 def generate_binary_to_base64_mapping():
     import string
 
     base64_alphabet = string.ascii_uppercase + string.ascii_lowercase + string.digits + '+/'
+    return _create_mapping_from_alphabet(base64_alphabet,6)
+
+def _create_mapping_from_alphabet(input_alphabet, bin_padding, binary_to_alphabet=True):
     map = {}
-    for counter,alphabet in enumerate(base64_alphabet):
-        counter_binary = "{0:06b}".format(counter)
-        map[counter_binary] = alphabet
-    
+    for counter,alphabet in enumerate(input_alphabet):
+        counter_binary = "{0:0{1}b}".format(counter,bin_padding)
+        if binary_to_alphabet:
+            map[counter_binary] = alphabet
+        else:
+            map[alphabet] = counter_binary
     return map

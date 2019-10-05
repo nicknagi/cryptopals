@@ -18,33 +18,31 @@ def hex_to_base64(hex_input):
             binary_chunks_to_convert.append(hex_string_to_binary_string[chunk:])
 
     base64_final_string = ''
-    bin_to_base64 = generate_binary_to_base64_mapping()
 
     for chunk in binary_chunks_to_convert[:-1]:
-        base64_final_string+=bin_to_base64[chunk[:6]]
-        base64_final_string+=bin_to_base64[chunk[6:12]]
-        base64_final_string+=bin_to_base64[chunk[12:18]]
-        base64_final_string+=bin_to_base64[chunk[18:24]]
+        base64_final_string+=_base64_for_chunk(chunk)
     
     final_chunk = binary_chunks_to_convert[-1]
-    last_chunk_len = len(final_chunk)
+    base64_final_string+=_base64_for_chunk(final_chunk)
 
-    if last_chunk_len == 8:
-        final_chunk+='0000'
-        base64_final_string+=bin_to_base64[final_chunk[:6]]
-        base64_final_string+=bin_to_base64[final_chunk[6:12]]
-        base64_final_string+='=='
-    elif last_chunk_len == 16:
-        final_chunk+='00'
-        base64_final_string+=bin_to_base64[final_chunk[:6]]
-        base64_final_string+=bin_to_base64[final_chunk[6:12]]
-        base64_final_string+=bin_to_base64[final_chunk[12:18]]
-        base64_final_string+='='
-    else:
-        base64_final_string+=bin_to_base64[final_chunk[:6]]
-        base64_final_string+=bin_to_base64[final_chunk[6:12]]
-        base64_final_string+=bin_to_base64[final_chunk[12:18]]
-        base64_final_string+=bin_to_base64[final_chunk[18:24]]
-    
     return base64_final_string
 
+def _base64_for_chunk(chunk):
+    from data_utils import generate_binary_to_base64_mapping
+    bin_to_base64 = generate_binary_to_base64_mapping()
+
+    chunk_modified = chunk
+    base64_string = ''
+
+    chunk_modified+='0'*{8: 4, 16: 2, 24: 0}[len(chunk)]
+
+    for index in range(0,len(chunk_modified),6):
+        if index == len(chunk_modified):
+            continue
+        base64_string+=bin_to_base64[chunk_modified[index:index+6]]
+
+    if len(base64_string) == 2:
+        base64_string+='=='
+    elif len(base64_string) == 3:
+        base64_string+='='
+    return base64_string
