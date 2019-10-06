@@ -27,6 +27,23 @@ def hex_to_base64(hex_input):
 
     return base64_final_string
 
+def hex_string_xor(string1, string2):
+    from data_utils import generate_hex_to_binary_mapping, _num_to_binary, generate_binary_to_hex_mapping
+
+    if len(string1) != len(string2):
+        raise AssertionError()
+
+    bin_to_hex = generate_binary_to_hex_mapping()
+    
+    xored_bin = int(string1,16) ^ int(string2,16)
+    xored_bin_string = _num_to_binary(xored_bin, len(string1)*4)
+
+    xored_hex_string = ''
+    for i in range(0,len(xored_bin_string),4):
+        xored_hex_string+=bin_to_hex[xored_bin_string[i:i+4]]
+    
+    return xored_hex_string
+
 def _base64_for_chunk(chunk):
     from data_utils import generate_binary_to_base64_mapping
     bin_to_base64 = generate_binary_to_base64_mapping()

@@ -17,3 +17,11 @@ class TestDataUtils(unittest.TestCase):
         self.assertEqual(map['001100'], 'M')
         self.assertEqual(map['101011'], 'r')
         self.assertEqual(map['000010'], 'C')
+
+    def test_when_binary_string_input_mapping_returns_expected_hex_value(self):
+        from data_utils import generate_binary_to_hex_mapping
+
+        map = generate_binary_to_hex_mapping()
+        self.assertEqual(map['0011'], '3')
+        self.assertEqual(map['1010'], 'a')
+        self.assertEqual(map['0000'], '0')
