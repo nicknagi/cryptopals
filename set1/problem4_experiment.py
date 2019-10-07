@@ -1,7 +1,7 @@
 def main():
     from utils import single_char_key_search
 
-    with open('problem4.txt') as f:
+    with open('data/problem4.txt') as f:
         content = f.readlines()
     content = [x.strip() for x in content]
 
@@ -15,5 +15,6 @@ def main():
             best_result = result[0]
 
     print(best_result.decode())
+
 if __name__ == '__main__':
     main()
