@@ -45,6 +45,21 @@ def hex_string_xor(string1, string2):
     
     return xored_hex_string
 
+def single_char_key_search(encrypted_hex_string):
+    ciphertext = bytes.fromhex(encrypted_hex_string)
+    potential_messages = []
+    for key_value in range(256):
+        message = single_char_xor(ciphertext, key_value)
+        score = get_english_score(message)
+        data = {
+            'message': message,
+            'score': score,
+            'key': key_value
+            }
+        potential_messages.append(data)
+    best_score = sorted(potential_messages, key=lambda x: x['score'], reverse=True)[0]
+    return best_score['message'].decode()
+
 # untested code
 def get_english_score(input_bytes):
     character_frequencies = {
