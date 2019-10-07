@@ -31,7 +31,6 @@ def hex_string_xor(string1, string2):
     from data_utils import generate_hex_to_binary_mapping, _num_to_binary, generate_binary_to_hex_mapping
 
     if len(string1) != len(string2):
-        print(f'Strings of unequal size {len(string1)} != {len(string2)}')
         raise AssertionError()
 
     bin_to_hex = generate_binary_to_hex_mapping()
@@ -58,9 +57,8 @@ def single_char_key_search(encrypted_hex_string):
             }
         potential_messages.append(data)
     best_score = sorted(potential_messages, key=lambda x: x['score'], reverse=True)[0]
-    return best_score['message']
+    return (best_score['message'], best_score['score'])
 
-# untested code
 def get_english_score(input_bytes):
     from data_utils import generate_english_character_frequencies
     character_frequencies = generate_english_character_frequencies()
