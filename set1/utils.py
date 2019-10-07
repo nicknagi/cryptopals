@@ -31,6 +31,7 @@ def hex_string_xor(string1, string2):
     from data_utils import generate_hex_to_binary_mapping, _num_to_binary, generate_binary_to_hex_mapping
 
     if len(string1) != len(string2):
+        print(f'Strings of unequal size {len(string1)} != {len(string2)}')
         raise AssertionError()
 
     bin_to_hex = generate_binary_to_hex_mapping()
