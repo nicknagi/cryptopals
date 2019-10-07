@@ -25,3 +25,11 @@ class TestDataUtils(unittest.TestCase):
         self.assertEqual(map['0011'], '3')
         self.assertEqual(map['1010'], 'a')
         self.assertEqual(map['0000'], '0')
+
+    def test_character_frequency_mapping_returns_expected_frequencies_when_queried(self):
+        from data_utils import generate_english_character_frequencies
+
+        map = generate_english_character_frequencies()
+        self.assertEqual(map['a'], .08167)
+        self.assertEqual(map['z'], .00074)
+        self.assertEqual(map['g'], .02015)
