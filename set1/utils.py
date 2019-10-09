@@ -71,6 +71,10 @@ def single_char_xor(input_bytes, char_value):
         output_bytes += bytes([byte ^ char_value])
     return output_bytes
 
+def hamming_distance(s1, s2):
+    assert len(s1) == len(s2)
+    return sum(c1 != c2 for c1, c2 in zip(s1, s2))
+
 def _base64_for_chunk(chunk):
     from data_utils import generate_binary_to_base64_mapping
     bin_to_base64 = generate_binary_to_base64_mapping()

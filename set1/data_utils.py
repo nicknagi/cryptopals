@@ -26,6 +26,9 @@ def generate_english_character_frequencies():
         'u': .02758, 'v': .00978, 'w': .02360, 'x': .00150,
         'y': .01974, 'z': .00074, ' ': .13000
     }
+# untested code
+def convert_string_to_binary_string(input_string):
+    return ''.join("{0:08b}".format(ord(x), 'b') for x in input_string)
 
 def _create_mapping_from_alphabet(input_alphabet, bin_padding, binary_to_alphabet=True):
     map = {}
