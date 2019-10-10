@@ -75,6 +75,19 @@ def hamming_distance(s1, s2):
     assert len(s1) == len(s2)
     return sum(c1 != c2 for c1, c2 in zip(s1, s2))
 
+def base64_to_binary(base64_string):
+    from data_utils import generate_base64_to_binary_mapping
+    map = generate_base64_to_binary_mapping()
+
+    string_builder = ''
+    for char in base64_string:
+        if char == '=':
+            string_builder = string_builder[:-2]
+            continue
+        string_builder += map[char]
+    
+    return string_builder
+
 def _base64_for_chunk(chunk):
     from data_utils import generate_binary_to_base64_mapping
     bin_to_base64 = generate_binary_to_base64_mapping()

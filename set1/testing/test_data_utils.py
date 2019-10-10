@@ -10,6 +10,14 @@ class TestDataUtils(unittest.TestCase):
         self.assertEqual('1010', map['a'])
         self.assertEqual('0000', map['0'])
     
+    def test_when_base64_char_input_mapping_returns_expected_binary_value(self):
+        from data_utils import generate_base64_to_binary_mapping
+
+        map = generate_base64_to_binary_mapping()
+        self.assertEqual('001100', map['M'])
+        self.assertEqual('101011', map['r'])
+        self.assertEqual('000010', map['C'])
+
     def test_when_binary_string_input_mapping_returns_expected_base64_value(self):
         from data_utils import generate_binary_to_base64_mapping
 

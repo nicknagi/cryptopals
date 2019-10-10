@@ -4,6 +4,12 @@ def generate_hex_to_binary_mapping():
     hex_alphabet = string.digits + 'abcdef'
     return _create_mapping_from_alphabet(hex_alphabet,4,binary_to_alphabet=False)
 
+def generate_base64_to_binary_mapping():
+    import string
+
+    base64_alphabet = string.ascii_uppercase + string.ascii_lowercase + string.digits + '+/'
+    return _create_mapping_from_alphabet(base64_alphabet,6,binary_to_alphabet=False)
+
 def generate_binary_to_base64_mapping():
     import string
 
@@ -28,7 +34,7 @@ def generate_english_character_frequencies():
     }
 # untested code
 def convert_string_to_binary_string(input_string):
-    return ''.join("{0:08b}".format(ord(x), 'b') for x in input_string)
+    return ''.join(_num_to_binary(ord(x), 8) for x in input_string)
 
 def _create_mapping_from_alphabet(input_alphabet, bin_padding, binary_to_alphabet=True):
     map = {}
