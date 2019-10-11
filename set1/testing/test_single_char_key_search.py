@@ -16,9 +16,7 @@ class TestSingleCharKeySearch(unittest.TestCase):
         faker = faker.Faker()
 
         random_base_string = faker.text().replace('\n', '')
-        print(random_base_string)
         encrypted_base_string = repeating_key_xor(faker.word()[0], random_base_string)
 
         actual_answer = single_char_key_search(encrypted_base_string)[0].decode()
-        print(actual_answer)
         self.assertEqual(random_base_string, actual_answer)
