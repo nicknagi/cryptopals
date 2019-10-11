@@ -11,10 +11,16 @@ def main():
     # might need to try more key sizes
     min_info = []
     for keysize in range(2,41):
-        distance = hamming_distance(binary_data[:keysize*8], binary_data[keysize*8: keysize*2*8]) / keysize
+        num_blocks = 4
+        distance = 0
+        for i in range(num_blocks):
+            distance += hamming_distance(binary_data[keysize*i*8:keysize*(i+1)*8], binary_data[keysize*(i+1)*8: keysize*(i+2)*8])
+        distance = distance / keysize
         min_info.append((keysize, distance))
     
-    best_key_sizes = sorted(min_info, key=lambda x: x[1])
+    best_key_sizes = sorted(min_info, key=lambda x: x[1])[:3]
+    import pprint
+    pprint.pprint(best_key_sizes)
 
     potential_keys = []
     
