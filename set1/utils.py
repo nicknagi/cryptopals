@@ -57,7 +57,7 @@ def single_char_key_search(encrypted_hex_string):
             }
         potential_messages.append(data)
     best_score = sorted(potential_messages, key=lambda x: x['score'], reverse=True)[0]
-    return (best_score['message'], best_score['score'])
+    return (best_score['message'], best_score['score'], chr(best_score['key']))
 
 def get_english_score(input_bytes):
     from data_utils import generate_english_character_frequencies
