@@ -14,7 +14,7 @@ def main():
         distance = hamming_distance(binary_data[:keysize*8], binary_data[keysize*8: keysize*2*8]) / keysize
         min_info.append((keysize, distance))
     
-    best_key_sizes = sorted(min_info, key=lambda x: x[1])[:3]
+    best_key_sizes = sorted(min_info, key=lambda x: x[1])
 
     potential_keys = []
     
@@ -32,15 +32,15 @@ def main():
         splatted_binary_data = np.asarray([*binary_data_divisible]) #could be problem
         numpy_binary_data = np.reshape(splatted_binary_data,(int(len(splatted_binary_data)/keysize_num_bits), keysize_num_bits)) #could be problem
 
-        for block_start in range(0,keysize_num_bits-8,8): 
+        for block_start in range(0,keysize_num_bits-7,8): 
             binary_string_builder = ''
             block = numpy_binary_data[:,block_start:block_start+8] # automate this and everything following
 
             splatted_bin = list(block)
+
             for list_of_bytes in splatted_bin:
                 binary_string_builder += ''.join(list_of_bytes)
             
-            # hex_string = str(hex(int(binary_string_builder,2)))[2:] # potentially generating the wrong hex or input to the function
             from data_utils import generate_binary_to_hex_mapping
             bin_to_hex = generate_binary_to_hex_mapping()
 
@@ -51,12 +51,23 @@ def main():
             potential_key += single_char_key_search(hex_string)[2]
         potential_keys.append(potential_key)
     
-    print(potential_keys)
+    # print(potential_keys)
 
+    final = []
+    from encryption import repeating_key_xor
     for key in potential_keys:
-        from encryption import repeating_key_xor
+        from utils import get_english_score
 
-        # print(repeating_key_xor(key, binary_data))
+        final.append((key, get_english_score(bytes(key, 'ascii'))))
+    
+    best_shit = sorted(final, key=lambda x: x[1], reverse=True)
+    # print(repeating_key_xor('Terminator X: Bring the noise', content))
+    
+    import pprint
+    pprint.pprint(best_shit)
+
+    # Key is: Terminator X: Bring the noise
+
 
 
 if __name__ == '__main__':
