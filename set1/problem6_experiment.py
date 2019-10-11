@@ -1,5 +1,5 @@
 def main():
-    from utils import base64_to_binary, hamming_distance
+    from utils import base64_to_binary, hamming_distance, single_char_key_search, 
     import numpy as np
     
     with open('data/problem6.txt') as f:
@@ -17,14 +17,21 @@ def main():
     keysize_num_bits = min_info[0] * 8
     print(f'Opitmal Keysize Is {min_info[0]} With AVG Hamming Distance Of {min_info[1]}')
 
-    print(len(binary_data))
     binary_data = binary_data[:-(len(binary_data)%(keysize_num_bits))]
-    print(len(binary_data))
 
     binary_data = np.asarray([*binary_data])
     binary_data = np.reshape(binary_data,(int(len(binary_data)/keysize_num_bits), keysize_num_bits))
-    # binary_data = np.transpose(binary_data)
-    print(binary_data.shape)
+
+    f = ''
+    x = binary_data[:,32:40]
+
+    y = list(x)
+    for lb in y:
+        f += ''.join(lb)
+    
+    hex_string = str(hex(int(f,2)))[2:]
+    print(hex_string)
+    print(single_char_key_search(hex_string))
 
 
 if __name__ == '__main__':
