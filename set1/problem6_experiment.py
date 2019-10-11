@@ -74,6 +74,11 @@ def main():
 
     # Key is: Terminator X: Bring the noise
 
+    '''
+    TODO:
+    * combine text for top key using the output of single key xor
+    '''
+
 
 
 if __name__ == '__main__':
