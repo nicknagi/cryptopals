@@ -1,5 +1,5 @@
 def main():
-    from utils import base64_to_binary, hamming_distance, single_char_key_search, 
+    from utils import base64_to_binary, hamming_distance, single_char_key_search
     import numpy as np
     
     with open('data/problem6.txt') as f:
