@@ -1,3 +1,3 @@
 #!/bin/bash 
 
-python3 -m unittest testing/*.py
+python -m unittest testing/*.py
